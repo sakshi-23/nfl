@@ -1,0 +1,224 @@
+[
+ {
+  "count": 0, 
+  "teamId": "ram", 
+  "years": []
+ }, 
+ {
+  "count": 2, 
+  "teamId": "rai", 
+  "years": [
+   "1981", 
+   "1977"
+  ]
+ }, 
+ {
+  "count": 3, 
+  "teamId": "rav", 
+  "years": [
+   "2013", 
+   "2001", 
+   "1971"
+  ]
+ }, 
+ {
+  "count": 4, 
+  "teamId": "nwe", 
+  "years": [
+   "2015", 
+   "2005", 
+   "2004", 
+   "2002"
+  ]
+ }, 
+ {
+  "count": 1, 
+  "teamId": "sea", 
+  "years": [
+   "2014"
+  ]
+ }, 
+ {
+  "count": 1, 
+  "teamId": "tam", 
+  "years": [
+   "2003"
+  ]
+ }, 
+ {
+  "count": 6, 
+  "teamId": "pit", 
+  "years": [
+   "2009", 
+   "2006", 
+   "1980", 
+   "1979", 
+   "1976", 
+   "1975"
+  ]
+ }, 
+ {
+  "count": 0, 
+  "teamId": "htx", 
+  "years": []
+ }, 
+ {
+  "count": 0, 
+  "teamId": "jax", 
+  "years": []
+ }, 
+ {
+  "count": 0, 
+  "teamId": "min", 
+  "years": []
+ }, 
+ {
+  "count": 2, 
+  "teamId": "mia", 
+  "years": [
+   "1974", 
+   "1973"
+  ]
+ }, 
+ {
+  "count": 1, 
+  "teamId": "chi", 
+  "years": [
+   "1986"
+  ]
+ }, 
+ {
+  "count": 0, 
+  "teamId": "nyj", 
+  "years": []
+ }, 
+ {
+  "count": 1, 
+  "teamId": "clt", 
+  "years": [
+   "2007"
+  ]
+ }, 
+ {
+  "count": 3, 
+  "teamId": "was", 
+  "years": [
+   "1992", 
+   "1988", 
+   "1983"
+  ]
+ }, 
+ {
+  "count": 2, 
+  "teamId": "nyg", 
+  "years": [
+   "2012", 
+   "2008"
+  ]
+ }, 
+ {
+  "count": 0, 
+  "teamId": "oti", 
+  "years": []
+ }, 
+ {
+  "count": 0, 
+  "teamId": "phi", 
+  "years": []
+ }, 
+ {
+  "count": 3, 
+  "teamId": "den", 
+  "years": [
+   "2016", 
+   "1999", 
+   "1998"
+  ]
+ }, 
+ {
+  "count": 5, 
+  "teamId": "dal", 
+  "years": [
+   "1996", 
+   "1994", 
+   "1993", 
+   "1978", 
+   "1972"
+  ]
+ }, 
+ {
+  "count": 1, 
+  "teamId": "kan", 
+  "years": [
+   "1970"
+  ]
+ }, 
+ {
+  "count": 5, 
+  "teamId": "sfo", 
+  "years": [
+   "1995", 
+   "1990", 
+   "1989", 
+   "1985", 
+   "1982"
+  ]
+ }, 
+ {
+  "count": 0, 
+  "teamId": "sdg", 
+  "years": []
+ }, 
+ {
+  "count": 0, 
+  "teamId": "buf", 
+  "years": []
+ }, 
+ {
+  "count": 1, 
+  "teamId": "nor", 
+  "years": [
+   "2010"
+  ]
+ }, 
+ {
+  "count": 0, 
+  "teamId": "car", 
+  "years": []
+ }, 
+ {
+  "count": 0, 
+  "teamId": "atl", 
+  "years": []
+ }, 
+ {
+  "count": 0, 
+  "teamId": "det", 
+  "years": []
+ }, 
+ {
+  "count": 0, 
+  "teamId": "cin", 
+  "years": []
+ }, 
+ {
+  "count": 4, 
+  "teamId": "gnb", 
+  "years": [
+   "2011", 
+   "1997", 
+   "1968", 
+   "1967"
+  ]
+ }, 
+ {
+  "count": 0, 
+  "teamId": "crd", 
+  "years": []
+ }, 
+ {
+  "count": 0, 
+  "teamId": "cle", 
+  "years": []
+ }
+]
