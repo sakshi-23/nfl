@@ -20,8 +20,8 @@ circle {
 d3.json("data/superbowl-winners.json",function(error,json){
 
   var width = $("body").width(),
-    height = 300,
-    padding = 10, // separation between nodes
+    height = 350,
+    padding = 25, // separation between nodes
     minRadius = 15,
     maxRadius = 45;
 
@@ -54,7 +54,8 @@ d3.json("data/superbowl-winners.json",function(error,json){
         radius: radiusScale(d.count),
         color: teamColorMap[d.teamId],
         cx: x(i),
-        cy: height / 2
+        cy: height / 2,
+        teamId:d.teamId
       };
     });
 
@@ -70,19 +71,51 @@ d3.json("data/superbowl-winners.json",function(error,json){
       .attr("width", width)
       .attr("height", height);
 
-  var circle = svg.selectAll("circle")
-      .data(nodes)
-    .enter().append("circle")
-      .attr("r", function(d) { return d.radius; })
-      .style("fill", function(d) { return d.color; });
+  var node = svg.selectAll("g.node")
+      .data(nodes);
+ 
+ 
+  // Enter any new nodes.
+  var nodeEnter = node.enter().append("svg:g")
+      .attr("class", "node")
+      .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
       // .call(force.drag);
+ 
+  // Append a circle
+  nodeEnter.append("svg:circle")
+      .attr("r", function(d) { return d.radius })
+      .style("opacity", "0");
+   
+  // Append images
+  var images = nodeEnter.append("svg:image")
+        .attr("xlink:href",  function(d) { console.log(d.teamId);return "logos/"+d.teamId+".png";})
+        .attr("x", function(d) { return -25;})
+        .attr("y", function(d) { return -25;})
+        .attr("height", 75)
+        .attr("width", 75);
+
+  // var circle = svg.selectAll("circle")
+  //     .data(nodes)
+  //   .enter().append("circle")
+  //     .attr("r", function(d) { return d.radius; })
+  //     .style("fill", function(d) { return "#eeeeee"; });
+  //     // .call(force.drag);
+
+  //   circle.append("svg:image")
+  //       .attr("xlink:href",  function(d) { console.log(d.teamId);return "logos/"+d.teamId+".png";})
+  //       .attr("x", function(d) { return -25;})
+  //       .attr("y", function(d) { return -25;})
+  //       .attr("height", 50)
+  //       .attr("width", 50);
 
   function tick(e) {
-    circle
+    nodeEnter
         .each(gravity(.2 * e.alpha))
-        .each(collide(.5))
-        .attr("cx", function(d) { return d.x; })
-        .attr("cy", function(d) { return d.y; });
+        .each(collide(.7))
+        // .attr("cx", function(d) { return d.x; })
+        // .attr("cy", function(d) { return d.y; });
+
+    nodeEnter.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
   }
 
   // Move nodes toward cluster focus.
