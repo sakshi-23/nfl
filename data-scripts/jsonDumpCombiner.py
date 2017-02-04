@@ -24,5 +24,7 @@ for team in dump1["results"]:
 for team in dump2["results"]:
 	combinedJson["results"][team] = dump2["results"][team]
 
+print combinedJson.keys()
+
 with open('../data/allGames.json', 'w') as outfile:
     json.dump(combinedJson, outfile,indent=1)
