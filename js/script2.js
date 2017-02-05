@@ -5,7 +5,7 @@ $(function(){
 var widthScreen = '100%'
 var heightScreen = '100%'
 var margin = {top: 50, right: 20, bottom: 30, left: 70},
-    width = 600 - margin.left - margin.right,
+    width = 650 - margin.left - margin.right,
     height = 1200 - margin.top - margin.bottom;
 var rowclicked=false,yearprev=false;
 var data;
@@ -150,7 +150,7 @@ function createChart(allData,team,selector) {
     var positionsObject={}
     var objectLength=[];
     var radius = 8;
-    dis = ( width)/25
+    dis = (width)/25
 
     if(typeof data[0].date.getMonth !== 'function'){
 
@@ -193,7 +193,8 @@ function createChart(allData,team,selector) {
 
     var circle = svg.selectAll("dot")
         .data(data)
-        .enter().append("circle")
+        .enter()
+        .append("rect")
         .attr("class", function(d) {
             score=0
             if (allData.results[d.oppn])
@@ -203,50 +204,45 @@ function createChart(allData,team,selector) {
                 return "win"+score
             return "lost"+score
         })
-        .attr("r", function(d){
-            return 5*Math.abs(d.team_score-d.oppn_score)/(d.oppn_score+d.team_score)+5
-        })
-//        .attr("title", function(d) {return d.year+" "+d.game_name})
-        .style("stroke", function(d) {if (d.home_flag) return "black"})
-        .attr("cx", function(d,i) {
+        //.attr("r", function(d){
+        //    return 5*Math.abs(d.team_score-d.oppn_score)/(d.oppn_score+d.team_score)+5
+        //})
+        .attr("width",22)
+        .attr("height",22)
+        //.style("stroke", function(d) {if (d.home_flag) return "black"})
+        .attr("x", function(d,i) {
             if (d.game_name=="Wild Card")
-                return 18*dis
+                return 18*dis-3
             if (d.game_name=="Division")
-                return 19*dis
+                return 19*dis-3
             if (d.game_name=="Conf. Champ.")
-                return 20*dis
+                return 20*dis-3
             if (d.game_name=="SuperBowl")
-                return 21*dis
-             return (d.week-1)*dis
+                return 21*dis-3
+
+            return (d.week-1)*dis-3
          })
-        .attr("cy", function(d) {
-            return yLoc(d.year);
+        .attr("y", function(d) {
+            return yLoc(d.year)-5;
          })
          .on("mouseover", function(d) {
-          tooltip.transition()
-               .duration(200)
-               .style("opacity", .9);
-          tooltip.html(function(){
-           score = allData.results[d.oppn][d.year].won
-           total = (parseInt(allData.results[d.oppn][d.year].won)+parseInt(allData.results[d.oppn][d.year].lost))
-           won = d["won_flag"]?" (W) ":" (L)"
-            str = "Vs "+teams[d["oppn"]].name + "<br/>"+
-          "Score: "+d["team_score"]+"-" +d["oppn_score"] +won+"<br/>"+
-          "Opposition League score: "+score+"/" +total +"<br/>"
-            return str
-           }).style("left", (d3.event.pageX + 5) + "px")
-           .style("top", (d3.event.pageY - 70) + "px")
+              tooltip.transition()
+                   .duration(200)
+                   .style("opacity", .9);
 
-
-//           d3.select(this).classed("hover",true)
-
-
-
-
+              tooltip.html(function(){
+                   score = allData.results[d.oppn][d.year].won
+                   total = (parseInt(allData.results[d.oppn][d.year].won)+parseInt(allData.results[d.oppn][d.year].lost))
+                   won = d["won_flag"]?" (W) ":" (L)"
+                    str = "Vs "+teams[d["oppn"]].name + "<br/>"+
+                  "Score: "+d["team_score"]+"-" +d["oppn_score"] +won+"<br/>"+
+                  "Opposition League score: "+score+"/" +total +"<br/>"
+                    return str
+              })
+              .style("left", (d3.event.pageX + 5) + "px")
+              .style("top", (d3.event.pageY - 70) + "px")
           })
           .on("mouseout", function(d) {
-
-
               tooltip.transition()
                    .duration(500)
                    .style("opacity", 0);
@@ -365,8 +361,7 @@ function createChart(allData,team,selector) {
             return  (i+1)
             })
             .attr("x", function() {
-
-                return i*dis;
+                return i*dis+8;
             })
             .append("svg:title")
             .text( function() {

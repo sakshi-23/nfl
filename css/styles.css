@@ -217,9 +217,9 @@ circle{
      border-right: 2px solid gray;
 }
 
-@media (min-width: 1200px)
+/*@media (min-width: 1200px)*/
 .container{
-    width:1200px;
+    width:1350px;
 }
 
 select{
