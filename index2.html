@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>NFL</title>
+    <script
+  src="https://code.jquery.com/jquery-3.1.1.min.js"
+  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+  crossorigin="anonymous"></script>
+    <script src="js/d3.min.js"></script>
+     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" type="text/css" rel="stylesheet">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="js/script2.js"></script>
+    <link href="css/styles.css" rel="stylesheet" type="text/css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" type="text/css" href="jquery-ui.min.css">
+
+<script src="js/jquery-ui.min.js"></script>
+<script src="data/teamColorMap.js"></script>
+<script src="js/top2.js"></script>
+</head>
+<body style="background-color: black;">
+
+
+<div class="tooltip"></div>
+<div class="container">
+    <h1 class="page-header" id="glyphicons">50 years of NFL</h1>
+    <svg id="legend" width="300" height="70">
+        <text x="5" y="15">Oppn League Win %<title>The intensity of the colors indicate how well did the opposition team play during that league</title></text>
+        <circle class="win1" r="6" cx="125" cy="10" ><title>A darker green is indicative of a win against a team that performed well during the league</title></circle>
+        <circle class="win0" r="6" cx="135" cy="10" ><title>A lighter green is indicative of a win against a team that did not performed well during the league</title></circle>
+        <circle class="lost1" r="6" cx="145" cy="10" ><title>A lighter red is indicative of a loss against a team that performed well during the league</title></circle>
+        <circle class="lost0" r="6" cx="155" cy="10"><title>A darker red is indicative of a loss against a team that did not performed well during the league</title></circle>
+
+        <text x="5" y="35">Game Win/loss Margin<title>The size indicates by how much margin the team won or lost, indicative of the team's performance for a particular game</title></text>
+        <circle class="win0" r="5" cx="125" cy="30" ></circle>
+        <circle class="win0" r="2" cx="135" cy="30" style="fill:black"></circle>
+        <circle class="win0" r="2" cx="140" cy="30" style="fill:black"></circle>
+        <circle class="win0" r="12" cx="155" cy="30"></circle>
+
+        <text x="5" y="55">Home | Away <title>The stroke indicates whether the team played at home or away</title></text>
+        <circle class="win0" r="6" cx="125" cy="50" style="stroke:black;" ></circle>
+        <circle class="win0" r="6" cx="155" cy="50" ></circle>
+
+
+    </svg>
+    <div id='vis'><span>Click to highlight the team games<br>Drag and drop the see the teams below</span></div>
+
+     <div id='row'>
+         <p>Super Bowl</p>
+        <svg width="1200px" height="30px" style="margin-left:90px;"></svg>
+
+     </div>
+
+    <!--<div id="team1Drop"> Release to  add team</div>-->
+    <!--<div id="team2Drop"> Release to  add team</div>-->
+
+    <div id="teamChart1" class="showrightBorder"><select id="team1"></select><img class="heading" src=""><h4 ></h4></div>
+
+
+    <div id="teamChart2"> <select id="team2"></select><img class="heading" src=""><h4 ></h4></div>
+
+</div>
+</body>
+</html>
