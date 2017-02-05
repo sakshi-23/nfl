@@ -102,6 +102,7 @@ function dragstarted(d) {
            $("#teamChart1").addClass("border-team")
            $("#teamChart1").removeClass("showrightBorder")
             addToteam1=true
+            addToteam2=false
        }
 
        else if (d3.event.y > 165 && d3.event.x>550){
@@ -109,6 +110,7 @@ function dragstarted(d) {
             $("#teamChart2").addClass("border-team")
             $("#teamChart1").removeClass("showrightBorder")
             addToteam2=true
+             addToteam1=false
 
        }
        else {
