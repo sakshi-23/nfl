@@ -130,7 +130,8 @@ text{
 
 .draw{
     /*fill:#fdae61*/
-    fill: #fec44f;
+    /*fill: #fec44f;*/
+    fill:#D9D9D9;
 }
 
 .yetToPlay{
@@ -144,7 +145,7 @@ text{
 
 .lost1{
     /*fill:#fdae61*/
-    fill:#fa9fb5
+    fill:#FEA0A0
 }
 
 .line{

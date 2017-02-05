@@ -196,21 +196,45 @@ function createChart(allData,team,selector) {
         .enter()
         .append("rect")
         .attr("class", function(d) {
-            score=0
-            if (allData.results[d.oppn])
-                score = allData.results[d.oppn][d.year].won/(parseInt(allData.results[d.oppn][d.year].won)+parseInt(allData.results[d.oppn][d.year].lost))
-            score = parseInt(score/0.51)
-            if(d.won_flag){
-                return "win"+score
-            }
-            else if(d.team_score== d.oppn_score){
-                if(d.year!=2016){
-                    return "draw"
+            var colorAttr = $('input[name="colorAttr"]:checked').val();
+            if(colorAttr=="oppQuality"){
+                score=0
+                if (allData.results[d.oppn])
+                    score = allData.results[d.oppn][d.year].won/(parseInt(allData.results[d.oppn][d.year].won)+parseInt(allData.results[d.oppn][d.year].lost))
+                score = parseInt(score/0.51)
+                if(d.won_flag){
+                    return "win"+score
+                }
+                else if(d.team_score== d.oppn_score){
+                    if(d.year!=2016){
+                        return "draw"
+                    }else{
+                        return "yetToPlay"
+                    }
                 }else{
-                    return "yetToPlay"
+                    return "lost"+score
                 }
             }else{
-                return "lost"+score
+                var scoreDiff = Math.abs(d.team_score- d.oppn_score);
+                if(d.won_flag){
+                    if(scoreDiff<=10){
+                        return "win0";
+                    }else{
+                        return "win1";
+                    }
+                }else if(d.team_score== d.oppn_score){
+                    if(d.year!=2016){
+                        return "draw"
+                    }else{
+                        return "yetToPlay"
+                    }
+                }else{
+                    if(scoreDiff<=10){
+                        return "lost1";
+                    }else{
+                        return "lost0";
+                    }
+                }
             }
         })
         //.attr("r", function(d){
@@ -402,6 +426,50 @@ function createChart(allData,team,selector) {
     }
 }
 
+    $('input[type=radio][name=colorAttr]').change(function() {
+        d3.selectAll("rect").attr("class", function(d) {
+                var colorAttr = $('input[name="colorAttr"]:checked').val();
+                if(colorAttr=="oppQuality"){
+                    score=0
+                    if (data.results[d.oppn])
+                        score = data.results[d.oppn][d.year].won/(parseInt(data.results[d.oppn][d.year].won)+parseInt(data.results[d.oppn][d.year].lost))
+                    score = parseInt(score/0.51)
+                    if(d.won_flag){
+                        return "win"+score
+                    }
+                    else if(d.team_score== d.oppn_score){
+                        if(d.year!=2016){
+                            return "draw"
+                        }else{
+                            return "yetToPlay"
+                        }
+                    }else{
+                        return "lost"+score
+                    }
+                }else{
+                    var scoreDiff = Math.abs(d.team_score- d.oppn_score);
+                    if(d.won_flag){
+                        if(scoreDiff<=10){
+                            return "win0";
+                        }else{
+                            return "win1";
+                        }
+                    }else if(d.team_score== d.oppn_score){
+                        if(d.year!=2016){
+                            return "draw"
+                        }else{
+                            return "yetToPlay"
+                        }
+                    }else{
+                        if(scoreDiff<=10){
+                            return "lost1";
+                        }else{
+                            return "lost0";
+                        }
+                    }
+                }
+            })
 
+    });
 
 });
