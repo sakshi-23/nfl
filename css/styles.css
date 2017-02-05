@@ -293,10 +293,10 @@ p{
 }
 
 #vis span{
-   float: right;
-   color:#ccc;
-   position:absolute;
-   right:50px;
+       float: right;
+    color: #8a8a8a;
+    position: absolute;
+    right: 50px;
 }
 
 #legend{
