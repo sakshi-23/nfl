@@ -209,7 +209,11 @@ function createChart(allData,team,selector) {
                     if(d.year!=2016){
                         return "draw"
                     }else{
-                        return "yetToPlay"
+                        if(d.game_name=="SuperBowl"){
+                            return "yetToPlay"
+                        }else{
+                            return "draw"
+                        }
                     }
                 }else{
                     return "lost"+score
@@ -226,7 +230,11 @@ function createChart(allData,team,selector) {
                     if(d.year!=2016){
                         return "draw"
                     }else{
-                        return "yetToPlay"
+                        if(d.game_name=="SuperBowl"){
+                            return "yetToPlay"
+                        }else{
+                            return "draw"
+                        }
                     }
                 }else{
                     if(scoreDiff<=10){
@@ -441,7 +449,11 @@ function createChart(allData,team,selector) {
                         if(d.year!=2016){
                             return "draw"
                         }else{
-                            return "yetToPlay"
+                            if(d.game_name=="SuperBowl"){
+                                return "yetToPlay"
+                            }else{
+                                return "draw"
+                            }
                         }
                     }else{
                         return "lost"+score
@@ -458,7 +470,11 @@ function createChart(allData,team,selector) {
                         if(d.year!=2016){
                             return "draw"
                         }else{
-                            return "yetToPlay"
+                            if(d.game_name=="SuperBowl"){
+                                return "yetToPlay"
+                            }else{
+                                return "draw"
+                            }
                         }
                     }else{
                         if(scoreDiff<=10){
