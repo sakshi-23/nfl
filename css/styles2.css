@@ -122,35 +122,29 @@ text{
 
 .win0{
     fill:#a6d96a
+
+
 }
 
 .win1{
      fill:#1a9641
 }
 
-.draw{
-    /*fill:#fdae61*/
-    /*fill: #fec44f;*/
-    fill:#D9D9D9;
-}
 
-.yetToPlay{
-    fill: #000;
-    stroke: gold;
-}
 
 .lost0{
      fill:#d7191c
+
+
 }
 
 .lost1{
-    /*fill:#fdae61*/
-    fill:#FEA0A0
+    fill:#fdae61
+
 }
 
 .line{
-    stroke:#e0e0e0;
-    stroke-width:0.3px;
+    stroke:#e0e0e0
 }
 circle{
     stroke-width: 1px;
@@ -158,10 +152,6 @@ circle{
 
 .tick{
     cursor:pointer
-}
-
-.tick text{
-    fill:white;
 }
 
 .unhighlight{
@@ -292,9 +282,7 @@ p{
 
 #vis span{
    float: right;
-   color:#ccc;
-   position:absolute;
-   right:50px;
+   color:#ccc
 }
 
 #legend{
@@ -309,16 +297,3 @@ p{
     height:80px;
     opacity:0.3
 }
-
-.playoffLabel{
-    fill: white;
-}
-
-.weekTickText{
-    fill:white;
-}
-
-    .weekTickText.superbowl{
-        fill:gold;
-    }
-
