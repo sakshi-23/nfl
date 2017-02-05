@@ -178,16 +178,17 @@ function createChart(allData,team,selector) {
     .range([height, 0]);
     var yAxis = d3.svg.axis().scale(y)
     .orient("left")
-    .ticks(50)
+    .ticks(50);
+
     y.domain([new Date(1966,1,1), new Date(2016,1,1)]);
 
 // Add the scatterplot
 
     var line = svg.append("line")
                        .attr("class", "line")
-                       .attr("x1", 355)
+                       .attr("x1", 358)
                         .attr("y1", -10)
-                       .attr("x2", 355)
+                       .attr("x2", 358)
                        .attr("y2", height-18);
 
     var circle = svg.selectAll("dot")
@@ -199,16 +200,26 @@ function createChart(allData,team,selector) {
             if (allData.results[d.oppn])
                 score = allData.results[d.oppn][d.year].won/(parseInt(allData.results[d.oppn][d.year].won)+parseInt(allData.results[d.oppn][d.year].lost))
             score = parseInt(score/0.51)
-            if(d.won_flag)
+            if(d.won_flag){
                 return "win"+score
-            return "lost"+score
+            }
+            else if(d.team_score== d.oppn_score){
+                if(d.year!=2016){
+                    return "draw"
+                }else{
+                    return "yetToPlay"
+                }
+            }else{
+                return "lost"+score
+            }
         })
         //.attr("r", function(d){
         //    return 5*Math.abs(d.team_score-d.oppn_score)/(d.oppn_score+d.team_score)+5
         //})
-        .attr("width",20)
-        .attr("height",20)
+        .attr("width",19)
+        .attr("height",19)
         //.style("stroke", function(d) {if (d.home_flag) return "black"})
+        .style("stroke", function(d) {if (d.game_name=="SuperBowl") return "gold"})
         .attr("x", function(d,i) {
             if (d.game_name=="Wild Card")
                 return 18*dis-8
@@ -235,7 +246,7 @@ function createChart(allData,team,selector) {
                    won = d["won_flag"]?" (W) ":" (L)"
                     str = "Vs "+teams[d["oppn"]].name + "<br/>"+
                   "Score: "+d["team_score"]+"-" +d["oppn_score"] +won+"<br/>"+
-                  "Opposition League score: "+score+"/" +total +"<br/>"
+                  "Opponent record: "+score+"/" +total +"<br/>"
                     return str
               })
               .style("left", (d3.event.pageX + 5) + "px")
@@ -270,10 +281,10 @@ function createChart(allData,team,selector) {
          $("text").removeClass("black")
         if (yearprev==year){
             yearprev=""
-             d3.selectAll(".circleGroup circle")
+             d3.selectAll(".circleGroup rect")
               .classed("unclicked",false)
 
-               d3.selectAll(".circleGroup circle")
+               d3.selectAll(".circleGroup rect")
               .classed("clicked",false)
             return;
 
@@ -281,7 +292,7 @@ function createChart(allData,team,selector) {
 
         $(d3.event.target).addClass("black")
 
-        d3.selectAll(".circleGroup circle")
+        d3.selectAll(".circleGroup rect")
               .classed("unclicked",function(node){
                 if(year!=node.year){
                     return true
@@ -291,7 +302,7 @@ function createChart(allData,team,selector) {
               })
 
 
-            d3.selectAll(".circleGroup circle")
+            d3.selectAll(".circleGroup rect")
               .classed("clicked",function(node){
                 if(year==node.year && yearprev!=node.year){
                     return true
@@ -307,7 +318,7 @@ function createChart(allData,team,selector) {
 
     function mousein(){
          var year = $(d3.event.target).text()
-            d3.selectAll(".circleGroup circle")
+            d3.selectAll(".circleGroup rect")
                 .classed("unhighlight",function(node){
                 if(year!=node.year){
                     return true
@@ -316,7 +327,7 @@ function createChart(allData,team,selector) {
                 return false
               })
 
-             d3.selectAll(".circleGroup circle")
+             d3.selectAll(".circleGroup rect")
                 .classed("highlight",function(node){
                 if(year==node.year){
                     return true
@@ -328,9 +339,9 @@ function createChart(allData,team,selector) {
     }
 
     function mouseout(){
-            d3.selectAll(".circleGroup circle")
+            d3.selectAll(".circleGroup rect")
               .classed("unhighlight",false)
-              d3.selectAll(".circleGroup circle")
+              d3.selectAll(".circleGroup rect")
               .classed("highlight",false)
 
     }
@@ -342,25 +353,39 @@ function createChart(allData,team,selector) {
         .attr("transform", "translate(-5,-15)")
 
     var text = svg.append("g")
-        .attr("class", "")
         .attr("transform", "translate(375,-30)")
         .append("text")
-        .text("Playoffs")
+        .attr("class", "playoffLabel")
+        .text("Playoffs");
+
     for (var i = 0; i <22; i++) {
         xTicks.append("text")
+            .attr("class",function(){
+                if (i==21){
+                    return "weekTickText superbowl"
+                }else{
+                    return "weekTickText"
+                }
+            })
             .text(function(f){
               if (i==18)
                     return "WC"
                 if (i==19)
-                    return "DS"
+                    return "DIV"
                 if (i==20)
-                    return "CC"
+                    return "CONF"
                 if (i==21)
                     return "SB"
             return  (i+1)
             })
             .attr("x", function() {
-                return i*dis;
+                if(i==20){
+                    return i*dis-3;
+                }else if(i==21) {
+                    return i*dis+2;
+                }else{
+                    return i*dis;
+                }
             })
             .append("svg:title")
             .text( function() {

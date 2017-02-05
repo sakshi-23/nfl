@@ -16,7 +16,7 @@ d3.json('data/teams2.json', function(data) {
 
   var radiusScale = d3.scale.linear().domain([0,6]).range([minRadius,maxRadius]);
   var n = 32, // total number of nodes
-    m = 4; // number of distinct clusters
+    m = 7; // number of distinct clusters
 
   // var color = d3.scale.category10()
   //     .domain(d3.range(m));
@@ -24,7 +24,8 @@ d3.json('data/teams2.json', function(data) {
   var x = d3.scale.ordinal()
       .domain(d3.range(m))
       .rangePoints([-250, width+300], 1);
-  var labels= ["0 wins","1-2 wins","3-4 wins", "5-6 wins"]
+
+     var labels= ["0","1","2","3","4","5","6"]
 // for (row in labels){
     d3.selectAll("#row svg")
     .selectAll("text")
@@ -32,7 +33,7 @@ d3.json('data/teams2.json', function(data) {
     .enter()
     .append("text")
     .text(function(d){return d})
-    .attr("x",function(d,i) {return x(i)*0.7+30})
+    .attr("x",function(d,i) {return (width/m)*(i+1)-80})
     .attr("y",20)
 
 
@@ -49,7 +50,7 @@ d3.json('data/teams2.json', function(data) {
     }
   }
   var nodes = json.map(function(d) {
-      var i = getGroup(d.count);
+      var i = d.count;
       var v = (i + 1) / m * -Math.log(Math.random());
       return {
         radius: radiusScale(d.count),
@@ -57,7 +58,8 @@ d3.json('data/teams2.json', function(data) {
         cx:  x(i),
         cy: height / 2,
         teamId:d.teamId,
-        group:i
+        group:i,
+          wins: d.count
       };
     });
 
@@ -183,7 +185,10 @@ function dragstarted(d) {
           tooltip.transition()
                .duration(200)
                .style("opacity", .9);
-          tooltip.html(teams[d.teamId].name)
+          tooltip.html(function(){
+                    var tooltipStr = teams[d.teamId].name + " ("+ d.wins+")"
+                      return tooltipStr
+                })
                 .style("left", (d3.event.pageX + 5) + "px")
                 .style("top", (d3.event.pageY - 20) + "px")})
         .on("mouseout", function(d) {
@@ -196,9 +201,9 @@ function dragstarted(d) {
             $(".node").removeClass("highlight")
             if (logoPrev==id){
                 logoPrev=""
-                 d3.selectAll(".circleGroup circle")
+                 d3.selectAll(".circleGroup rect")
                   .classed("unLogoClicked",false)
-                   d3.selectAll(".circleGroup circle")
+                   d3.selectAll(".circleGroup rect")
                   .classed("LogoClicked",false)
                 return;
 
@@ -206,7 +211,7 @@ function dragstarted(d) {
 
             $(d3.event.target.parentElement).addClass("highlight")
 
-            d3.selectAll(".circleGroup circle")
+            d3.selectAll(".circleGroup rect")
                   .classed("unLogoClicked",function(node){
                     if(node.oppn!=id){
                         return true
@@ -215,7 +220,7 @@ function dragstarted(d) {
                   })
 
 
-                d3.selectAll(".circleGroup circle")
+                d3.selectAll(".circleGroup rect")
                   .classed("LogoClicked",function(node){
                     if(node.oppn==id ){
                         return true
