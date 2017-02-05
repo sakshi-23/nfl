@@ -16,7 +16,7 @@ d3.json('data/teams2.json', function(data) {
 
   var radiusScale = d3.scale.linear().domain([0,6]).range([minRadius,maxRadius]);
   var n = 32, // total number of nodes
-    m = 4; // number of distinct clusters
+    m = 7; // number of distinct clusters
 
   // var color = d3.scale.category10()
   //     .domain(d3.range(m));
@@ -24,16 +24,27 @@ d3.json('data/teams2.json', function(data) {
   var x = d3.scale.ordinal()
       .domain(d3.range(m))
       .rangePoints([-250, width+300], 1);
-  var labels= ["0 wins","1-2 wins","3-4 wins", "5-6 wins"]
+//  var labels= ["0 wins","1-2 wins","3-4 wins", "5-6 wins"]
+//// for (row in labels){
+//    d3.selectAll("#row svg")
+//    .selectAll("text")
+//    .data(labels)
+//    .enter()
+//    .append("text")
+//    .text(function(d){return d})
+//    .attr("x",function(d,i) {return x(i)*0.7+30})
+//    .attr("y",20)
+
+     var labels= ["0","1","2","3","4","5","6"]
 // for (row in labels){
-    d3.selectAll("#row svg")
-    .selectAll("text")
-    .data(labels)
-    .enter()
-    .append("text")
-    .text(function(d){return d})
-    .attr("x",function(d,i) {return x(i)*0.7+30})
-    .attr("y",20)
+     d3.selectAll("#row svg")
+         .selectAll("text")
+         .data(labels)
+         .enter()
+         .append("text")
+         .text(function(d){return d})
+         .attr("x",function(d,i) {return (width/m)*(i+1)-80})
+         .attr("y",20)
 
 
 
@@ -49,7 +60,7 @@ d3.json('data/teams2.json', function(data) {
     }
   }
   var nodes = json.map(function(d) {
-      var i = getGroup(d.count);
+      var i = d.count;
       var v = (i + 1) / m * -Math.log(Math.random());
       return {
         radius: radiusScale(d.count),
