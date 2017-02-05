@@ -311,13 +311,13 @@ function createChart(allData,team,selector) {
             })
             .append("svg:title")
             .text( function() {
-                if (i==17)
-                    return "Wild Card"
                 if (i==18)
-                    return "Division"
+                    return "Wild Card"
                 if (i==19)
-                    return "Conf. Champ"
+                    return "Division"
                 if (i==20)
+                    return "Conf. Champ"
+                if (i==21)
                     return "SuperBowl"
                 return "Week "+(i+1);
             })
