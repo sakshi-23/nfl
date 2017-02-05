@@ -140,12 +140,14 @@ text{
 }
 
 .lost0{
-     fill:#d7191c
+/*fill:#fdae61
+     fill:#d7191c*/
+     fill: #ff5053;
 }
 
 .lost1{
     /*fill:#fdae61*/
-    fill:#FEA0A0
+    fill:#ffb2b2
 }
 
 .line{
