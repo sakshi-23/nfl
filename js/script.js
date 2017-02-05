@@ -1,22 +1,43 @@
+
+var teams;
+
 $(function(){
-
-
-
 var widthScreen = '100%'
 var heightScreen = '100%'
 var margin = {top: 50, right: 20, bottom: 30, left: 70},
     width = 600 - margin.left - margin.right,
     height = 1200 - margin.top - margin.bottom;
 var rowclicked=false,yearprev=false;
-var teams;
 var data;
 
 
-d3.json('data/teams.json', function(data) {
+d3.json('data/teams2.json', function(data) {
     teams=data;
-    for (t in teams){
-        $('#team1').append($('<option>', {value:t, text:teams[t]}));
-         $('#team2').append($('<option>', {value:t, text:teams[t]}));
+    var items = Object.keys(teams).map(function(key) {
+        return [key, teams[key].name, teams[key].id];
+    });
+
+    // Sort the array based on the second element
+    items.sort(function(first, second) {
+        if( first[2].localeCompare(second[2])==0){
+            return first[1].localeCompare(second[1])
+        }
+        return first[2].localeCompare(second[2])
+    });
+
+    $('#team1').append('<option disabled>AFC</option>');
+    $('#team2').append('<option disabled>AFC</option>')
+    var fl=false;
+    for (var i in items){
+        t=items[i]
+        if(t[2]=="NFC" && fl==false){
+            $('#team1').append('<option disabled>NFC</option>');
+            $('#team2').append('<option disabled>NFC</option>');
+            fl=true;
+        }
+
+        $('#team1').append($('<option>', {value:t[0], text:t[1]}));
+        $('#team2').append($('<option>', {value:t[0], text:t[1]}));
     }
 
 }
@@ -43,6 +64,10 @@ $("#team2").on("change",function(){
 function highlightTeam(){
     val1 = $("#team1").val();
     val2= $("#team2").val();
+
+    unselectAll()
+
+
     d3.selectAll(".node")
     .style("opacity",function(d){
         if ([val1,val2].indexOf(d.teamId)==-1){
@@ -51,6 +76,31 @@ function highlightTeam(){
         else
             return 1
     })
+}
+
+function unselectAll(){
+    d3.selectAll(".circleGroup circle")
+              .classed("unhighlight",false)
+      d3.selectAll(".circleGroup circle")
+      .classed("highlight",false)
+
+
+     d3.selectAll(".circleGroup circle")
+              .classed("unclicked",false)
+      d3.selectAll(".circleGroup circle")
+      .classed("unclicked",false)
+
+     d3.selectAll(".circleGroup circle")
+              .classed("LogoClicked",false)
+      d3.selectAll(".circleGroup circle")
+      .classed("unLogoClicked",false)
+
+       d3.selectAll(".highlight")
+        .classed("highlight",false)
+
+      d3.selectAll(".black")
+        .classed("black",false)
+
 }
 
 d3.json('data/allGames.json', function(dt) {
@@ -156,7 +206,7 @@ function createChart(allData,team,selector) {
         .attr("r", function(d){
             return 5*Math.abs(d.team_score-d.oppn_score)/(d.oppn_score+d.team_score)+5
         })
-        .attr("title", function(d) {return d.year+" "+d.game_name})
+//        .attr("title", function(d) {return d.year+" "+d.game_name})
         .style("stroke", function(d) {if (d.home_flag) return "black"})
         .attr("cx", function(d,i) {
             if (d.game_name=="Wild Card")
@@ -180,7 +230,7 @@ function createChart(allData,team,selector) {
            score = allData.results[d.oppn][d.year].won
            total = (parseInt(allData.results[d.oppn][d.year].won)+parseInt(allData.results[d.oppn][d.year].lost))
            won = d["won_flag"]?" (W) ":" (L)"
-            str = "Vs "+teams[d["oppn"]] + "<br/>"+
+            str = "Vs "+teams[d["oppn"]].name + "<br/>"+
           "Score: "+d["team_score"]+"-" +d["oppn_score"] +won+"<br/>"+
           "Opposition League score: "+score+"/" +total +"<br/>"
             return str
@@ -222,18 +272,21 @@ function createChart(allData,team,selector) {
         rowclicked =false;
         mouseout();
         var year = $(d3.event.target).text()
+         $("text").removeClass("black")
         if (yearprev==year){
-
-             d3.selectAll("circle")
+            yearprev=""
+             d3.selectAll(".circleGroup circle")
               .classed("unclicked",false)
 
-               d3.selectAll("circle")
+               d3.selectAll(".circleGroup circle")
               .classed("clicked",false)
             return;
 
         }
 
-        d3.selectAll("circle")
+        $(d3.event.target).addClass("black")
+
+        d3.selectAll(".circleGroup circle")
               .classed("unclicked",function(node){
                 if(year!=node.year){
                     return true
@@ -243,7 +296,7 @@ function createChart(allData,team,selector) {
               })
 
 
-            d3.selectAll("circle")
+            d3.selectAll(".circleGroup circle")
               .classed("clicked",function(node){
                 if(year==node.year && yearprev!=node.year){
                     return true
@@ -259,7 +312,7 @@ function createChart(allData,team,selector) {
 
     function mousein(){
          var year = $(d3.event.target).text()
-            d3.selectAll("circle")
+            d3.selectAll(".circleGroup circle")
                 .classed("unhighlight",function(node){
                 if(year!=node.year){
                     return true
@@ -268,7 +321,7 @@ function createChart(allData,team,selector) {
                 return false
               })
 
-             d3.selectAll("circle")
+             d3.selectAll(".circleGroup circle")
                 .classed("highlight",function(node){
                 if(year==node.year){
                     return true
@@ -280,9 +333,9 @@ function createChart(allData,team,selector) {
     }
 
     function mouseout(){
-            d3.selectAll("circle")
+            d3.selectAll(".circleGroup circle")
               .classed("unhighlight",false)
-              d3.selectAll("circle")
+              d3.selectAll(".circleGroup circle")
               .classed("highlight",false)
 
     }
@@ -292,6 +345,12 @@ function createChart(allData,team,selector) {
     var xTicks = svg.append("g")
         .attr("class", "xAxis")
         .attr("transform", "translate(-5,-15)")
+
+    var text = svg.append("g")
+        .attr("class", "")
+        .attr("transform", "translate(375,-30)")
+        .append("text")
+        .text("Playoffs")
     for (var i = 0; i <22; i++) {
         xTicks.append("text")
             .text(function(f){

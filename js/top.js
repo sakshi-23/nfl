@@ -1,4 +1,12 @@
-d3.json("data/superbowl-winners.json",function(error,json){
+var teams,logoPrev;
+d3.json('data/teams2.json', function(data) {
+    teams=data;
+    addToteam1=false;
+    addToteam2=false;
+    var tooltip = d3.select(".tooltip")
+ d3.json("data/superbowl-winners.json",function(error,json){
+
+
 
   var width = 1200,
     height = 170,
@@ -161,6 +169,7 @@ function dragstarted(d) {
       .style("opacity", "0")
 
 
+
   // Append images
   var images = nodeEnter.append("svg:image")
         .attr("xlink:href",  function(d) { return "logos/"+d.teamId+".png";})
@@ -168,7 +177,58 @@ function dragstarted(d) {
         .attr("y", function(d) { return -25;})
         .attr("height", 50)
         .attr("width", 50)
+        .attr("class","img-logo")
         .style("cursor","pointer")
+        .on("mouseover", function(d) {
+          tooltip.transition()
+               .duration(200)
+               .style("opacity", .9);
+          tooltip.html(teams[d.teamId].name)
+                .style("left", (d3.event.pageX + 5) + "px")
+                .style("top", (d3.event.pageY - 20) + "px")})
+        .on("mouseout", function(d) {
+              tooltip.transition()
+                   .duration(500)
+                   .style("opacity", 0);
+        })
+        .on("click",function clicked(d){
+           var id = d.teamId;
+            $(".node").removeClass("highlight")
+            if (logoPrev==id){
+                logoPrev=""
+                 d3.selectAll(".circleGroup circle")
+                  .classed("unLogoClicked",false)
+                   d3.selectAll(".circleGroup circle")
+                  .classed("LogoClicked",false)
+                return;
+
+            }
+
+            $(d3.event.target.parentElement).addClass("highlight")
+
+            d3.selectAll(".circleGroup circle")
+                  .classed("unLogoClicked",function(node){
+                    if(node.oppn!=id){
+                        return true
+                    }
+                    return false
+                  })
+
+
+                d3.selectAll(".circleGroup circle")
+                  .classed("LogoClicked",function(node){
+                    if(node.oppn==id ){
+                        return true
+
+                    }
+                    return false
+                  })
+
+             logoPrev =id;
+
+    });
+
+
 
   // var circle = svg.selectAll("circle")
   //     .data(nodes)
@@ -230,3 +290,6 @@ function dragstarted(d) {
     };
   }
 })
+
+
+    });

@@ -179,7 +179,20 @@ circle{
 }
 
 .unhover{
-    opacity:0.2!important
+    opacity:0.2;
+}
+
+.unLogoClicked{
+     opacity:0.2;
+}
+
+.unclicked.unLogoClicked{
+    opacity:0.2
+}
+
+
+.LogoClicked{
+     opacity:1!important
 }
 
 .tooltip {
@@ -251,6 +264,36 @@ background:gray;
 }
 
 #row{
- border-bottom: 1px solid #d2d2d2;
-margin-bottom:10px;
+    border-bottom: 1px solid #d2d2d2;
+    margin-bottom:10px;
+    color:gray;
+}
+
+p{
+    margin: 0;
+    position: absolute;
+}
+
+
+.black{
+    fill:black;
+    stroke: #6b6b6b;
+}
+
+#vis span{
+   float: right;
+   color:#ccc
+}
+
+#legend{
+    float: right;
+    margin-top: -100px;
+    right: 0;
+    position: absolute;
+}
+
+.big{
+    width:80px;
+    height:80px;
+    opacity:0.3
 }

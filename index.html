@@ -26,9 +26,29 @@
 <div class="tooltip"></div>
 <div class="container">
     <h1 class="page-header" id="glyphicons">50 years of NFL</h1>
-    <div id='vis'></div>
+    <svg id="legend" width="300" height="70">
+        <text x="5" y="15">Oppn League Win %<title>The intensity of the colors indicate how well did the opposition team play during that league</title></text>
+        <circle class="win1" r="6" cx="125" cy="10" ><title>A darker green is indicative of a win against a team that performed well during the league</title></circle>
+        <circle class="win0" r="6" cx="135" cy="10" ><title>A lighter green is indicative of a win against a team that did not performed well during the league</title></circle>
+        <circle class="lost1" r="6" cx="145" cy="10" ><title>A lighter red is indicative of a loss against a team that performed well during the league</title></circle>
+        <circle class="lost0" r="6" cx="155" cy="10"><title>A darker red is indicative of a loss against a team that did not performed well during the league</title></circle>
+
+        <text x="5" y="35">Game Win/loss Margin<title>The size indicates by how much margin the team won or lost, indicative of the team's performance for a particular game</title></text>
+        <circle class="win0" r="5" cx="125" cy="30" ></circle>
+        <circle class="win0" r="2" cx="135" cy="30" style="fill:black"></circle>
+        <circle class="win0" r="2" cx="140" cy="30" style="fill:black"></circle>
+        <circle class="win0" r="12" cx="155" cy="30"></circle>
+
+        <text x="5" y="55">Home | Away <title>The stroke indicates whether the team played at home or away</title></text>
+        <circle class="win0" r="6" cx="125" cy="50" style="stroke:black;" ></circle>
+        <circle class="win0" r="6" cx="155" cy="50" ></circle>
+
+
+    </svg>
+    <div id='vis'><span>Drag and drop the teams below</span></div>
 
      <div id='row'>
+         <p>Super Bowl</p>
         <svg width="1200px" height="30px" style="margin-left:90px;"></svg>
 
      </div>
