@@ -204,10 +204,10 @@ function createChart(allData,team,selector) {
             return "lost"+score
         })
         .attr("r", function(d){
-            return 5*Math.abs(d.team_score-d.oppn_score)/(d.oppn_score+d.team_score)+5
+            return 9
         })
 //        .attr("title", function(d) {return d.year+" "+d.game_name})
-        .style("stroke", function(d) {if (d.home_flag) return "black"})
+//        .style("stroke", function(d) {if (d.home_flag) return "black"})
         .attr("cx", function(d,i) {
             if (d.game_name=="Wild Card")
                 return 18*dis
