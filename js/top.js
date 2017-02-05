@@ -101,16 +101,19 @@ function dragstarted(d) {
         $("#teamChart2").removeClass("border-team")
            $("#teamChart1").addClass("border-team")
            $("#teamChart1").removeClass("showrightBorder")
-
+            addToteam1=true
        }
 
        else if (d3.event.y > 165 && d3.event.x>550){
              $("#teamChart1").removeClass("border-team")
             $("#teamChart2").addClass("border-team")
             $("#teamChart1").removeClass("showrightBorder")
+            addToteam2=true
 
        }
        else {
+        addToteam1=false;
+        addToteam2=false;
          $("#teamChart1").removeClass("border-team")
          $("#teamChart2").removeClass("border-team")
          $("#teamChart1").addClass("showrightBorder")
@@ -121,12 +124,13 @@ function dragstarted(d) {
 
     function dragended(d) {
 
-         if(d3.event.sourceEvent.y > 275 && d3.event.sourceEvent.x<550){
+         if(addToteam1){
             $('#team1')
                 .val(d.teamId)
                 .trigger('change');
+                addToteam1=false
        }
-       if(d3.event.sourceEvent.y > 275 && d3.event.sourceEvent.x>550){
+       if(addToteam2){
             $('#team2')
                 .val(d.teamId)
                 .trigger('change');
@@ -134,6 +138,9 @@ function dragstarted(d) {
         $("#teamChart1").addClass("showrightBorder")
         $("#teamChart1").removeClass("border-team")
          $("#teamChart2").removeClass("border-team")
+
+         addToteam1=false;
+         addToteam2=false;
         // force.resume();
     }
 
