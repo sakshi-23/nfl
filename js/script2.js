@@ -5,7 +5,7 @@ $(function(){
 var widthScreen = '100%'
 var heightScreen = '100%'
 var margin = {top: 50, right: 20, bottom: 30, left: 70},
-    width = 650 - margin.left - margin.right,
+    width = 600 - margin.left - margin.right,
     height = 1200 - margin.top - margin.bottom;
 var rowclicked=false,yearprev=false;
 var data;
@@ -121,7 +121,6 @@ d3.json('data/allGames.json', function(dt) {
 
 parseDate = d3.time.format("%Y-%m-%d").parse
 
-
 function createChart(allData,team,selector) {
 
     d3.select(selector).select("svg").remove();
@@ -207,20 +206,20 @@ function createChart(allData,team,selector) {
         //.attr("r", function(d){
         //    return 5*Math.abs(d.team_score-d.oppn_score)/(d.oppn_score+d.team_score)+5
         //})
-        .attr("width",22)
-        .attr("height",22)
+        .attr("width",20)
+        .attr("height",20)
         //.style("stroke", function(d) {if (d.home_flag) return "black"})
         .attr("x", function(d,i) {
             if (d.game_name=="Wild Card")
-                return 18*dis-3
+                return 18*dis-8
             if (d.game_name=="Division")
-                return 19*dis-3
+                return 19*dis-8
             if (d.game_name=="Conf. Champ.")
-                return 20*dis-3
+                return 20*dis-8
             if (d.game_name=="SuperBowl")
-                return 21*dis-3
+                return 21*dis-8
 
-            return (d.week-1)*dis-3
+            return (d.week-1)*dis-8
          })
         .attr("y", function(d) {
             return yLoc(d.year)-5;
@@ -361,7 +360,7 @@ function createChart(allData,team,selector) {
             return  (i+1)
             })
             .attr("x", function() {
-                return i*dis+8;
+                return i*dis;
             })
             .append("svg:title")
             .text( function() {
