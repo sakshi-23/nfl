@@ -1,15 +1,83 @@
+$(function(){
+
+
+
 var widthScreen = '100%'
 var heightScreen = '100%'
 var margin = {top: 50, right: 20, bottom: 30, left: 70},
-    width = 1200 - margin.left - margin.right,
+    width = 600 - margin.left - margin.right,
     height = 1200 - margin.top - margin.bottom;
+var rowclicked=false,yearprev=false;
+var teams;
+var data;
 
 
-d3.json('data/data.json', function(data) {
+d3.json('data/teams.json', function(data) {
+    teams=data;
+    for (t in teams){
+        $('#team1').append($('<option>', {value:t, text:teams[t]}));
+         $('#team2').append($('<option>', {value:t, text:teams[t]}));
+    }
 
-    var team="pit"
+}
+);
 
-    var svg1 = d3.select("#teamChart1")
+$("#team1").on("change",function(){
+
+    createChart(data,$(this).val(),"#teamChart1")
+    highlightTeam();
+    $("#teamChart1 .heading").attr("src","logos/"+$(this).val()+".png")
+
+
+})
+
+$("#team2").on("change",function(){
+
+    createChart(data,$(this).val(),"#teamChart2")
+    highlightTeam();
+     $("#teamChart2 .heading").attr("src","logos/"+$(this).val()+".png")
+
+
+})
+
+function highlightTeam(){
+    val1 = $("#team1").val();
+    val2= $("#team2").val();
+    d3.selectAll(".node")
+    .style("opacity",function(d){
+        if ([val1,val2].indexOf(d.teamId)==-1){
+            return 0.2
+        }
+        else
+            return 1
+    })
+}
+
+d3.json('data/allGames.json', function(dt) {
+
+
+    data=dt;
+//    createChart(data,"pit","#teamChart1")
+//    createChart(data,"pit","#teamChart2")
+
+    $('#team1')
+    .val('atl')
+    .trigger('change');
+    $('#team2')
+    .val('nwe')
+    .trigger('change');
+
+});
+
+parseDate = d3.time.format("%Y-%m-%d").parse
+
+
+function createChart(allData,team,selector) {
+
+    d3.select(selector).select("svg").remove();
+//    d3.select(selector+" .heading").html(teams[team])
+
+    var svg = d3.select(selector)
     .attr("height", height + margin.top + margin.bottom)
     .attr("width", width)
     .append("svg")
@@ -21,16 +89,7 @@ d3.json('data/data.json', function(data) {
         .attr("transform",
               "translate(" + margin.left + "," + margin.top + ")");
 
-    createChart(data,team,svg1)
-
-
-
-});
-
-parseDate = d3.time.format("%Y-%m-%d").parse
-
-
-function createChart(allData,team,svg) {
+    var tooltip = d3.select(".tooltip")
     var data =allData.games[team];
     data = data.filter(function(v) {
             return v.year > 1966;
@@ -41,14 +100,20 @@ function createChart(allData,team,svg) {
     var positionsObject={}
     var objectLength=[];
     var radius = 8;
-    dis = ( width)/45
-     data.forEach(function(d) {
+    dis = ( width)/25
+
+    if(typeof data[0].date.getMonth !== 'function'){
+
+           data.forEach(function(d) {
         d.year =+ d.year,
         d.week =+ d.week,
         d.team_score =+d.team_score,
         d.oppn_score =+d.oppn_score,
         d.date = parseDate(d.date)
     })
+    }
+
+
 
 
 
@@ -68,52 +133,177 @@ function createChart(allData,team,svg) {
     y.domain([new Date(1966,1,1), new Date(2016,1,1)]);
 
 // Add the scatterplot
+
+    var line = svg.append("line")
+                       .attr("class", "line")
+                       .attr("x1", 355)
+                        .attr("y1", -10)
+                       .attr("x2", 355)
+                       .attr("y2", height-18);
+
     var circle = svg.selectAll("dot")
         .data(data)
         .enter().append("circle")
-       .attr("class", function(d) {
-            return ""
+        .attr("class", function(d) {
+            score=0
+            if (allData.results[d.oppn])
+                score = allData.results[d.oppn][d.year].won/(parseInt(allData.results[d.oppn][d.year].won)+parseInt(allData.results[d.oppn][d.year].lost))
+            score = parseInt(score/0.51)
+            if(d.won_flag)
+                return "win"+score
+            return "lost"+score
         })
-        .attr("r", radius)
+        .attr("r", function(d){
+            return 5*Math.abs(d.team_score-d.oppn_score)/(d.oppn_score+d.team_score)+5
+        })
         .attr("title", function(d) {return d.year+" "+d.game_name})
+        .style("stroke", function(d) {if (d.home_flag) return "black"})
         .attr("cx", function(d,i) {
             if (d.game_name=="Wild Card")
-                return 17*dis
-            if (d.game_name=="Division")
                 return 18*dis
-            if (d.game_name=="Conf. Champ.")
+            if (d.game_name=="Division")
                 return 19*dis
-            if (d.game_name=="SuperBowl")
+            if (d.game_name=="Conf. Champ.")
                 return 20*dis
+            if (d.game_name=="SuperBowl")
+                return 21*dis
              return (d.week-1)*dis
          })
         .attr("cy", function(d) {
             return yLoc(d.year);
          })
+         .on("mouseover", function(d) {
+          tooltip.transition()
+               .duration(200)
+               .style("opacity", .9);
+          tooltip.html(function(){
+           score = allData.results[d.oppn][d.year].won
+           total = (parseInt(allData.results[d.oppn][d.year].won)+parseInt(allData.results[d.oppn][d.year].lost))
+           won = d["won_flag"]?" (W) ":" (L)"
+            str = "Vs "+teams[d["oppn"]] + "<br/>"+
+          "Score: "+d["team_score"]+"-" +d["oppn_score"] +won+"<br/>"+
+          "Opposition League score: "+score+"/" +total +"<br/>"
+            return str
+           }).style("left", (d3.event.pageX + 5) + "px")
+           .style("top", (d3.event.pageY - 70) + "px")
+
+
+//           d3.select(this).classed("hover",true)
+
+
+
+
+          })
+          .on("mouseout", function(d) {
+
+
+              tooltip.transition()
+                   .duration(500)
+                   .style("opacity", 0);
+          });
+
+
 
 
     svg.append("g")
         .attr("class", "yAxis")
         .call(yAxis)
-        .style("fill", "gray");
+        .attr("transform", "translate(-5,0)")
+        .style("fill", "gray")
+        .on("mouseover",function(d){
+           mousein(d);
+        })
+        .on("mouseout",function(d){
+            mouseout();
+        })
+        .on("click",clicked)
+
+    function clicked(){
+        rowclicked =false;
+        mouseout();
+        var year = $(d3.event.target).text()
+        if (yearprev==year){
+
+             d3.selectAll("circle")
+              .classed("unclicked",false)
+
+               d3.selectAll("circle")
+              .classed("clicked",false)
+            return;
+
+        }
+
+        d3.selectAll("circle")
+              .classed("unclicked",function(node){
+                if(year!=node.year){
+                    return true
+
+                }
+                return false
+              })
+
+
+            d3.selectAll("circle")
+              .classed("clicked",function(node){
+                if(year==node.year && yearprev!=node.year){
+                    return true
+
+                }
+                return false
+              })
+
+         yearprev =$(d3.event.target).text();
+         rowclicked=true;
+
+    }
+
+    function mousein(){
+         var year = $(d3.event.target).text()
+            d3.selectAll("circle")
+                .classed("unhighlight",function(node){
+                if(year!=node.year){
+                    return true
+
+                }
+                return false
+              })
+
+             d3.selectAll("circle")
+                .classed("highlight",function(node){
+                if(year==node.year){
+                    return true
+
+                }
+                return false
+              })
+
+    }
+
+    function mouseout(){
+            d3.selectAll("circle")
+              .classed("unhighlight",false)
+              d3.selectAll("circle")
+              .classed("highlight",false)
+
+    }
 
     //ADD label for X-axis
 //    var arr = [1,2,3,4,5,6,7];
     var xTicks = svg.append("g")
         .attr("class", "xAxis")
         .attr("transform", "translate(-5,-15)")
-    for (var i = 0; i <21; i++) {
+    for (var i = 0; i <22; i++) {
         xTicks.append("text")
             .text(function(f){
-              if (i==17)
+              if (i==18)
                     return "WC"
-                if (i==18)
-                    return "DS"
                 if (i==19)
-                    return "CC"
+                    return "DS"
                 if (i==20)
+                    return "CC"
+                if (i==21)
                     return "SB"
-            return 'W' + (i+1)
+            return  (i+1)
             })
             .attr("x", function() {
 
@@ -136,3 +326,4 @@ function createChart(allData,team,svg) {
 
 
 
+});
