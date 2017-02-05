@@ -228,11 +228,11 @@ function createChart(allData,team,selector) {
                .style("opacity", .9);
           tooltip.html(function(){
            score = allData.results[d.oppn][d.year].won
-           total = (parseInt(allData.results[d.oppn][d.year].won)+parseInt(allData.results[d.oppn][d.year].lost))
-           won = d["won_flag"]?" (W) ":" (L)"
-            str = "Vs "+teams[d["oppn"]].name + "<br/>"+
-          "Score: "+d["team_score"]+"-" +d["oppn_score"] +won+"<br/>"+
-          "Opposition League score: "+score+"/" +total +"<br/>"
+                   score_opp = allData.results[d.oppn][d.year].lost
+                   won = d["won_flag"]?" (W) ":" (L)"
+                    str = "Vs "+teams[d["oppn"]].name + "<br/>"+
+                  "Score: "+d["team_score"]+"-" +d["oppn_score"] +won+"<br/>"+
+                  "Opponent record: "+score+"-" +score_opp +"<br/>"
             return str
            }).style("left", (d3.event.pageX + 5) + "px")
            .style("top", (d3.event.pageY - 70) + "px")
@@ -351,22 +351,34 @@ function createChart(allData,team,selector) {
         .attr("transform", "translate(375,-30)")
         .append("text")
         .text("Playoffs")
-    for (var i = 0; i <22; i++) {
+     for (var i = 0; i <22; i++) {
         xTicks.append("text")
+            .attr("class",function(){
+                if (i==21){
+                    return "weekTickText superbowl"
+                }else{
+                    return "weekTickText"
+                }
+            })
             .text(function(f){
               if (i==18)
                     return "WC"
                 if (i==19)
-                    return "DS"
+                    return "DIV"
                 if (i==20)
-                    return "CC"
+                    return "CONF"
                 if (i==21)
                     return "SB"
             return  (i+1)
             })
             .attr("x", function() {
-
-                return i*dis;
+                if(i==20){
+                    return i*dis-3;
+                }else if(i==21) {
+                    return i*dis+2;
+                }else{
+                    return i*dis;
+                }
             })
             .append("svg:title")
             .text( function() {

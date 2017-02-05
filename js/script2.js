@@ -206,10 +206,10 @@ function createChart(allData,team,selector) {
                     return "win"+score
                 }
                 else if(d.team_score== d.oppn_score){
-                    if(d.year!=2016){
-                        return "draw"
-                    }else{
+                    if(d.year==2016 && d.game_name=="SuperBowl"){
                         return "yetToPlay"
+                    }else{
+                        return "draw"
                     }
                 }else{
                     return "lost"+score
@@ -223,10 +223,10 @@ function createChart(allData,team,selector) {
                         return "win1";
                     }
                 }else if(d.team_score== d.oppn_score){
-                    if(d.year!=2016){
-                        return "draw"
-                    }else{
+                    if(d.year==2016 && d.game_name=="SuperBowl"){
                         return "yetToPlay"
+                    }else{
+                        return "draw"
                     }
                 }else{
                     if(scoreDiff<=10){
@@ -266,11 +266,11 @@ function createChart(allData,team,selector) {
 
               tooltip.html(function(){
                    score = allData.results[d.oppn][d.year].won
-                   total = (parseInt(allData.results[d.oppn][d.year].won)+parseInt(allData.results[d.oppn][d.year].lost))
+                   score_opp = allData.results[d.oppn][d.year].lost
                    won = d["won_flag"]?" (W) ":" (L)"
                     str = "Vs "+teams[d["oppn"]].name + "<br/>"+
                   "Score: "+d["team_score"]+"-" +d["oppn_score"] +won+"<br/>"+
-                  "Opponent record: "+score+"/" +total +"<br/>"
+                  "Opponent record: "+score+"-" +score_opp +"<br/>"
                     return str
               })
               .style("left", (d3.event.pageX + 5) + "px")
