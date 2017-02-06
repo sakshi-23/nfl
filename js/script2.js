@@ -426,11 +426,19 @@ function createChart(allData,team,selector) {
 }
 
     $('input[type=radio][name=colorAttr]').change(function() {
-        d3.selectAll("rect").attr("class", function(d) {
-                var colorAttr = $('input[name="colorAttr"]:checked').val();
+        var colorAttr = $('input[name="colorAttr"]:checked').val();
                 if(colorAttr=="oppQuality"){
                     $("#legend2").hide();
-                    $("#legend1").show();
+                    $("#legend1").show();}
+                 else{
+                 $("#legend1").hide();
+                    $("#legend2").show();
+
+                 }
+
+        d3.selectAll(".firstSvg rect").attr("class", function(d) {
+                var colorAttr = $('input[name="colorAttr"]:checked').val();
+                if(colorAttr=="oppQuality"){
                     score=0
                     if (data.results[d.oppn])
                         score = data.results[d.oppn][d.year].won/(parseInt(data.results[d.oppn][d.year].won)+parseInt(data.results[d.oppn][d.year].lost))
@@ -446,8 +454,6 @@ function createChart(allData,team,selector) {
                         return "lost"+score
                     }
                 }else{
-                    $("#legend1").hide();
-                    $("#legend2").show();
                     var scoreDiff = Math.abs(d.team_score- d.oppn_score);
                     if(d.won_flag){
                         if(scoreDiff<=10){
