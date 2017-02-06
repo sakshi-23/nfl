@@ -299,7 +299,7 @@ p{
     right: 50px;
 }
 
-#legend{
+.legend{
     float: right;
     margin-top: -100px;
     right: 0;
@@ -322,4 +322,12 @@ p{
 
     .weekTickText.superbowl{
         fill:gold;
+    }
+
+
+
+
+
+     #legend2{
+    display:none
     }

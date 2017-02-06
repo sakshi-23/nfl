@@ -237,7 +237,8 @@ function createChart(allData,team,selector) {
         .attr("width",19)
         .attr("height",19)
         //.style("stroke", function(d) {if (d.home_flag) return "black"})
-        .style("stroke", function(d) {if (d.game_name=="SuperBowl") return "gold"})
+        .style("stroke", function(d) {if (d.game_name=="SuperBowl" && d.won_flag) return "gold"})
+        .style("stroke-width", "2px")
         .attr("x", function(d,i) {
             if (d.game_name=="Wild Card")
                 return 18*dis-8
@@ -262,11 +263,13 @@ function createChart(allData,team,selector) {
                    score = allData.results[d.oppn][d.year].won
                    score_opp = allData.results[d.oppn][d.year].lost
                    won = d["won_flag"]?" (W) ":" (L)"
-                    str ="Date: "+dateFormat(d["date"])+"<br/>"+
-
+                   if (d["team_score"] ==d["oppn_score"])
+                        won=" (T)"
+                   home =d.home_flag?" (Home)":" (Away)"
+                   str ="Date: "+dateFormat(d["date"])+"&nbsp"+home+"<br/>"+
                      "Vs "+teams[d["oppn"]].name + "<br/>"+
-                  "Score: "+d["team_score"]+"-" +d["oppn_score"] +won+"<br/>"+
-                  "Opponent record: "+score+"-" +score_opp +"<br/>"
+                    "Score: "+d["team_score"]+"-" +d["oppn_score"] +won+"<br/>"+
+                    "Opponent record: "+score+"-" +score_opp +"<br/>"
                     return str
               })
               .style("left", (d3.event.pageX + 5) + "px")
@@ -426,6 +429,8 @@ function createChart(allData,team,selector) {
         d3.selectAll("rect").attr("class", function(d) {
                 var colorAttr = $('input[name="colorAttr"]:checked').val();
                 if(colorAttr=="oppQuality"){
+                    $("#legend2").hide();
+                    $("#legend1").show();
                     score=0
                     if (data.results[d.oppn])
                         score = data.results[d.oppn][d.year].won/(parseInt(data.results[d.oppn][d.year].won)+parseInt(data.results[d.oppn][d.year].lost))
@@ -441,6 +446,8 @@ function createChart(allData,team,selector) {
                         return "lost"+score
                     }
                 }else{
+                    $("#legend1").hide();
+                    $("#legend2").show();
                     var scoreDiff = Math.abs(d.team_score- d.oppn_score);
                     if(d.won_flag){
                         if(scoreDiff<=10){
