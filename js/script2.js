@@ -9,7 +9,7 @@ var margin = {top: 50, right: 20, bottom: 30, left: 70},
     height = 1220 - margin.top - margin.bottom;
 var rowclicked=false,yearprev=false;
 var data;
-
+var dateFormat = d3.time.format("%m-%d-%Y");
 
 d3.json('data/teams2.json', function(data) {
     teams=data;
@@ -206,15 +206,8 @@ function createChart(allData,team,selector) {
                     return "win"+score
                 }
                 else if(d.team_score== d.oppn_score){
-                    if(d.year!=2016){
-                        return "draw"
-                    }else{
-                        if(d.game_name=="SuperBowl"){
-                            return "yetToPlay"
-                        }else{
-                            return "draw"
-                        }
-                    }
+                    return "draw"
+
                 }else{
                     return "lost"+score
                 }
@@ -227,15 +220,8 @@ function createChart(allData,team,selector) {
                         return "win1";
                     }
                 }else if(d.team_score== d.oppn_score){
-                    if(d.year!=2016){
-                        return "draw"
-                    }else{
-                        if(d.game_name=="SuperBowl"){
-                            return "yetToPlay"
-                        }else{
-                            return "draw"
-                        }
-                    }
+                 return "draw"
+
                 }else{
                     if(scoreDiff<=10){
                         return "lost1";
@@ -276,7 +262,9 @@ function createChart(allData,team,selector) {
                    score = allData.results[d.oppn][d.year].won
                    score_opp = allData.results[d.oppn][d.year].lost
                    won = d["won_flag"]?" (W) ":" (L)"
-                    str = "Vs "+teams[d["oppn"]].name + "<br/>"+
+                    str ="Date: "+dateFormat(d["date"])+"<br/>"+
+
+                     "Vs "+teams[d["oppn"]].name + "<br/>"+
                   "Score: "+d["team_score"]+"-" +d["oppn_score"] +won+"<br/>"+
                   "Opponent record: "+score+"-" +score_opp +"<br/>"
                     return str
@@ -446,15 +434,9 @@ function createChart(allData,team,selector) {
                         return "win"+score
                     }
                     else if(d.team_score== d.oppn_score){
-                        if(d.year!=2016){
+
                             return "draw"
-                        }else{
-                            if(d.game_name=="SuperBowl"){
-                                return "yetToPlay"
-                            }else{
-                                return "draw"
-                            }
-                        }
+
                     }else{
                         return "lost"+score
                     }
@@ -467,15 +449,8 @@ function createChart(allData,team,selector) {
                             return "win1";
                         }
                     }else if(d.team_score== d.oppn_score){
-                        if(d.year!=2016){
-                            return "draw"
-                        }else{
-                            if(d.game_name=="SuperBowl"){
-                                return "yetToPlay"
-                            }else{
-                                return "draw"
-                            }
-                        }
+                          return "yetToPlay"
+
                     }else{
                         if(scoreDiff<=10){
                             return "lost1";
