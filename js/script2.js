@@ -6,7 +6,7 @@ var widthScreen = '100%'
 var heightScreen = '100%'
 var margin = {top: 50, right: 20, bottom: 30, left: 70},
     width = 600 - margin.left - margin.right,
-    height = 1200 - margin.top - margin.bottom;
+    height = 1220 - margin.top - margin.bottom;
 var rowclicked=false,yearprev=false;
 var data;
 
@@ -141,7 +141,7 @@ function createChart(allData,team,selector) {
     var tooltip = d3.select(".tooltip")
     var data =allData.games[team];
     data = data.filter(function(v) {
-            return v.year > 1966;
+            return v.year > 1965;
         });
     data.sort(function(a,b) {
         return d3.descending(a.year, b.year) || d3.ascending(a.index, b.index);
@@ -171,7 +171,7 @@ function createChart(allData,team,selector) {
 
     var yLoc = d3.scale.linear()
         .range([height, 0])
-        .domain([1966, 2016])
+        .domain([1965, 2016])
 
 
     var y = d3.time.scale()
@@ -180,7 +180,7 @@ function createChart(allData,team,selector) {
     .orient("left")
     .ticks(50);
 
-    y.domain([new Date(1966,1,1), new Date(2016,1,1)]);
+    y.domain([new Date(1965,1,1), new Date(2016,1,1)]);
 
 // Add the scatterplot
 
