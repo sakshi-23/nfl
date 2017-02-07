@@ -260,8 +260,10 @@ function createChart(allData,team,selector) {
                    .style("opacity", .9);
 
               tooltip.html(function(){
-                   score = allData.results[d.oppn][d.year].won
-                   score_opp = allData.results[d.oppn][d.year].lost
+                   // score = allData.results[d.oppn][d.year].won
+                   // score_opp = allData.results[d.oppn][d.year].lost
+                   var seasonWins = seasonWinLossMap[d.oppn][d.year]['win']
+                   var seasonLossesOrTies = seasonWinLossMap[d.oppn][d.year]['loss/tie']
                    won = d["won_flag"]?" (W) ":" (L)"
                    if (d["team_score"] ==d["oppn_score"])
                         won=" (T)"
@@ -269,7 +271,7 @@ function createChart(allData,team,selector) {
                    str ="Date: "+dateFormat(d["date"])+"&nbsp"+home+"<br/>"+
                      "Vs "+teams[d["oppn"]].name + "<br/>"+
                     "Score: "+d["team_score"]+"-" +d["oppn_score"] +won+"<br/>"+
-                    "Opponent record: "+score+"-" +score_opp +"<br/>"
+                    "Opponent season record: "+seasonWins+"-" +seasonLossesOrTies +"<br/>"
                     return str
               })
               .style("left", (d3.event.pageX + 5) + "px")
