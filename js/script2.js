@@ -246,10 +246,16 @@ function createChart(allData,team,selector) {
         .attr("class", function(d) {
             var colorAttr = $('input[name="colorAttr"]:checked').val();
             if(colorAttr=="oppQuality"){
-                score=0
-                if (allData.results[d.oppn])
-                    score = allData.results[d.oppn][d.year].won/(parseInt(allData.results[d.oppn][d.year].won)+parseInt(allData.results[d.oppn][d.year].lost))
-                score = parseInt(score/0.51)
+                //score=0
+                //if (allData.results[d.oppn])
+                //    score = allData.results[d.oppn][d.year].won/(parseInt(allData.results[d.oppn][d.year].won)+parseInt(allData.results[d.oppn][d.year].lost))
+                //score = parseInt(score/0.51)
+
+                var oppSeasonWins = parseInt(seasonWinLossMap[d.oppn][d.year]['win']);
+                var oppSeasonLossesOrDraws = parseInt(seasonWinLossMap[d.oppn][d.year]['loss/tie']);
+                var oppSeasonForm = oppSeasonWins/(oppSeasonWins+oppSeasonLossesOrDraws);
+                var score = parseInt(oppSeasonForm/0.51);
+
                 if(d.won_flag){
                     return "win"+score
                 }
@@ -492,10 +498,16 @@ function createChart(allData,team,selector) {
         d3.selectAll(".firstSvg rect").attr("class", function(d) {
                 var colorAttr = $('input[name="colorAttr"]:checked').val();
                 if(colorAttr=="oppQuality"){
-                    score=0
-                    if (data.results[d.oppn])
-                        score = data.results[d.oppn][d.year].won/(parseInt(data.results[d.oppn][d.year].won)+parseInt(data.results[d.oppn][d.year].lost))
-                    score = parseInt(score/0.51)
+
+                    //score=0
+                    //if (data.results[d.oppn])
+                    //    score = data.results[d.oppn][d.year].won/(parseInt(data.results[d.oppn][d.year].won)+parseInt(data.results[d.oppn][d.year].lost))
+                    //score = parseInt(score/0.51)
+                    var oppSeasonWins = parseInt(seasonWinLossMap[d.oppn][d.year]['win']);
+                    var oppSeasonLossesOrDraws = parseInt(seasonWinLossMap[d.oppn][d.year]['loss/tie']);
+                    var oppSeasonForm = oppSeasonWins/(oppSeasonWins+oppSeasonLossesOrDraws);
+                    var score = parseInt(oppSeasonForm/0.51);
+
                     if(d.won_flag){
                         return "win"+score
                     }
