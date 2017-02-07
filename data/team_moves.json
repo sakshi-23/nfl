@@ -1,0 +1,66 @@
+{
+
+  "clt":{
+    "1984":""
+  }
+}
+1984: Baltimore Colts moved to Indianapolis and became the Indianapolis Colts.
+1996: Cleveland Browns players and coaching staff moved to Baltimore and became the Ravens
+1997: Houston Oilers moved to Memphis and became the Tennessee Oilers
+2016: St. Louis Rams moved back to Los Angeles after 21 seasons in St. Louis.
+2017: San Diego Chargers moved to Los Angeles after 56 seasons in San Diego.
+NFC
+Arizona Cardinals
+  Were Phoenix and St Louis in the past
+LA Rams
+  Were St Louis and LA (previous time)
+
+
+AFC
+Cleveland Browns
+  Missed some years (how the system is now is correct)
+Indianapolis Colts
+  Were Baltimore Colts
+LA Chargers
+  Were San Diego for all previous seasons
+New England Patriots
+  Were Boston
+Oakland Raiders
+  Were LA and Oakland before
+Tennessee Titans
+  Were Houston Oilers before
+
+{
+   "ram":"St. Louis Rams",
+   "rai":"Oakland Raiders",
+   "rav":"Baltimore Ravens",
+   "nwe":"New England Patriots",
+   "sea":"Seattle Seahawks",
+   "tam":"Tampa Bay Buccaneers",
+   "pit":"Pittsburgh Steelers",
+   "htx":"Houston Texans",
+   "jax":"Jacksonville Jaguars",
+   "min":"Minnesota Vikings",
+   "mia":"Miami Dolphins",
+   "chi":"Chicago Bears",
+   "nyj":"New York Jets",
+   "clt":"Indianapolis Colts",
+   "was":"Washington Redskins",
+   "nyg":"New York Giants",
+   "oti":"Tennessee Titans",
+   "phi":"Philadelphia Eagles",
+   "den":"Denver Broncos",
+   "dal":"Dallas Cowboys",
+   "kan":"Kansas City Chiefs",
+   "sfo":"San Francisco 49ers",
+   "sdg":"Los Angeles Chargers",
+   "buf":"Buffalo Bills",
+   "nor":"New Orleans Saints",
+   "car":"Carolina Panthers",
+   "atl":"Atlanta Falcons",
+   "det":"Detroit Lions",
+   "cin":"Cincinnati Bengals",
+   "gnb":"Green Bay Packers",
+   "crd":"Arizona Cardinals",
+   "cle":"Cleveland Browns"
+}
