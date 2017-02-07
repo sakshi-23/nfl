@@ -1,5 +1,53 @@
 
 var teams;
+function teamNameChanges(team,year){
+    var changedTeams = ['ram','crd','clt','sdg','nwe','rai','oti']
+
+    if(changedTeams.indexOf(team)<0)
+        return ""
+    else if(team =='crd'){
+        if(year<=1987)
+            return "(St. Louis Cardinals)"
+
+        if(year>=1988 && year<1994)
+            return "(Phoenix Cardinals)"
+
+    }
+
+    else if(team =='ram'){
+        if(year>=1995 && year<=2015)
+            return "(St. Louis Rams)"
+    }
+
+    else if(team =='clt'){
+        if(year<1984 )
+            return "(Baltimore Colts)"
+    }
+
+
+    else if(team =='sdg'){
+        if(year<2016 )
+            return "(San Diego Chargers)"
+    }
+
+    else if(team =='nwe'){
+        if(year<=1970 )
+            return "(Boston Patriots)"
+    }
+
+    else if(team =='rai'){
+        if(year>=1982 && year<1995)
+            return "(Los Angeles Raiders)"
+    }
+
+    else if(team =='oti'){
+        if(year<1997)
+            return "(Houston Oilers)"
+    }
+
+    return ""
+
+}
 
 $(function(){
 var widthScreen = '100%'
@@ -263,7 +311,6 @@ function createChart(allData,team,selector) {
                    // score = allData.results[d.oppn][d.year].won
                    // score_opp = allData.results[d.oppn][d.year].lost
                    teamActualName = teamNameChanges(d.oppn,d.year)
-//                 home=""
                    var seasonWins = seasonWinLossMap[d.oppn][d.year]['win']
                    var seasonLossesOrTies = seasonWinLossMap[d.oppn][d.year]['loss/tie']
                    won = d["won_flag"]?" (W) ":" (L)"
@@ -272,7 +319,7 @@ function createChart(allData,team,selector) {
                    if(d.week<18)
                         home =d.home_flag?" (Away)":" (Home)"
                    str ="Date: "+dateFormat(d["date"])+"&nbsp"+home+"<br/>"+
-                     "Vs "+teams[d["oppn"]].name +teamActualName+"<br/>"+
+                    "Vs "+teams[d["oppn"]].name +teamActualName+"<br/>"+
                     "Score: "+d["team_score"]+"-" +d["oppn_score"] +won+"<br/>"+
                     "Opponent season record: "+seasonWins+"-" +seasonLossesOrTies +"<br/>"
                     return str
