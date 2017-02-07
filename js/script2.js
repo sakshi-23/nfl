@@ -127,20 +127,20 @@ function highlightTeam(){
 }
 
 function unselectAll(){
-    d3.selectAll(".circleGroup circle")
+    d3.selectAll(".circleGroup rect")
               .classed("unhighlight",false)
-      d3.selectAll(".circleGroup circle")
+      d3.selectAll(".circleGroup rect")
       .classed("highlight",false)
 
 
-     d3.selectAll(".circleGroup circle")
-              .classed("unclicked",false)
-      d3.selectAll(".circleGroup circle")
+     d3.selectAll(".circleGroup rect")
+              .classed("clicked",false)
+      d3.selectAll(".circleGroup rect")
       .classed("unclicked",false)
 
-     d3.selectAll(".circleGroup circle")
+     d3.selectAll(".circleGroup rect")
               .classed("LogoClicked",false)
-      d3.selectAll(".circleGroup circle")
+      d3.selectAll(".circleGroup rect")
       .classed("unLogoClicked",false)
 
        d3.selectAll(".highlight")
@@ -310,6 +310,7 @@ function createChart(allData,team,selector) {
               tooltip.html(function(){
                    // score = allData.results[d.oppn][d.year].won
                    // score_opp = allData.results[d.oppn][d.year].lost
+                   var home =""
                    teamActualName = teamNameChanges(d.oppn,d.year)
                    var seasonWins = seasonWinLossMap[d.oppn][d.year]['win']
                    var seasonLossesOrTies = seasonWinLossMap[d.oppn][d.year]['loss/tie']
