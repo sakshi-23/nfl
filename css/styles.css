@@ -236,6 +236,9 @@ circle{
 
 select{
     margin-left: 150px;
+    display: block;
+    float: left;
+    margin-top: 10px;
 }
 
 #vis{
@@ -257,6 +260,12 @@ img{
 
     width: 50px;
 
+}
+
+.img-holder{
+
+    height: 50px;
+    display: inline-block;
 }
 
 #team1Drop{
