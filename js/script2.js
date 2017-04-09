@@ -309,6 +309,9 @@ function createChart(allData,team,selector) {
             return yLoc(d.year)-5;
          })
          .on("mouseover", function(d) {
+            d3.selectAll("rect").classed("select",false);
+            d3.select(this).classed("select",true);
+
               tooltip.transition()
                    .duration(200)
                    .style("opacity", .9);
@@ -326,7 +329,7 @@ function createChart(allData,team,selector) {
                    if(d.week<18)
                         home =d.home_flag?" (Away)":" (Home)"
                    str ="Date: "+dateFormat(d["date"])+"&nbsp"+home+"<br/>"+
-                    "Vs "+teams[d["oppn"]].name +teamActualName+"<br/>"+
+                    "Vs. "+teams[d["oppn"]].name +teamActualName+"<br/>"+
                     "Score: "+d["team_score"]+"-" +d["oppn_score"] +won+"<br/>"+
                     "Opponent season record: "+seasonWins+"-" +seasonLossesOrTies +"<br/>"
                     return str

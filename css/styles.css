@@ -329,14 +329,16 @@ p{
     fill:white;
 }
 
-    .weekTickText.superbowl{
-        fill:gold;
-    }
+.weekTickText.superbowl{
+    fill:gold;
+}
 
 
-
-
-
-     #legend1{
+#legend1{
     display:none
-    }
+}
+
+rect.select{
+    stroke: white;
+    stroke-width: 1px;
+}
